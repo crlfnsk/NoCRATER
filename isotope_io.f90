@@ -11,8 +11,8 @@ subroutine print_header(filename)
     character(len=274), intent(in)    :: filename 
 
     Open(10, File=trim(filename)//'.txt')
-    Write(10, '("time [Ma]", 1X, "a [au]", 1X, "NBe [10^9/g]",/)' )
-    Write(10, '("--------", 1X, "--------", 1X, "---------------", /)')
+    Write(10, '("time [Ma]", 1X, "a [au]", 1X, "NBe [10^9/g]")' )
+    Write(10, '("--------", 1X, "--------", 1X, "---------------")')
 
 end subroutine print_header
 

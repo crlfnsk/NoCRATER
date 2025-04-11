@@ -34,11 +34,11 @@ program integrator
     ! Initial Condition: 
 
     example%sunmasses = 1.0_dp
-    example%resolution = 1.0e6_dp
-    example%kmax = 1000_dp
+    example%resolution = 1.0e2_dp
+    example%kmax = 10000_dp
     example%diameter = 350_dp
     example%composition = 2.5_dp
-    example%B_const = 3*L_Sun/(8*pi * c**2 * example%diameter * example%composition)
+    example%B_const = 3*L_Sun/(8*pi * c**2 * example%diameter*1e-6 * example%composition*1000) ! const for elliptical orbits in m2/s
     example%sma = 2.5_dp
     example%thetadeg = 0.0_dp
     example%pre_conc = 0.0_dp
@@ -46,11 +46,12 @@ program integrator
     ! Setup particle
 
     MiMi%time = 0
-    MiMi%a = example%sma
-    MiMi%Period = two_pi*sqrt(MiMi%a*AU/(G*example%sunmasses*M_Sun)) ! in s
+    MiMi%a = example%sma * AU ! in m
+    MiMi%Period = two_pi*sqrt(MiMi%a**3/(G*example%sunmasses*M_Sun)) ! in s
     MiMi%dt = MiMi%Period/example%resolution
     MiMi%N_Rev = 0
 
+    print*, "Period = ", MiMi%Period/(yr), "Ma"
 !    REAL(dp)                :: delta_concGalactic
 
     Be_euler%prodGalactic = PGCRrBe
